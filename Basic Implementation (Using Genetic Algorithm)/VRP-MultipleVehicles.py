@@ -31,6 +31,8 @@ cities = {
     'Z': [1140, 850],
 }
 startPoint = input("start point: ")
+numberOfTrucks = int(input("Number Of Trucks: "))
+numberOfPasses = int(input("Number Of Passes: "))
 listOfCities = list(cities.keys())
 listOfCities.remove(startPoint)
 
@@ -184,10 +186,10 @@ def removeFitnessFromPopulation(population):
 
 
 def sortPopulation(population):  ### use it after appending the fitness to popuation
-    return sorted(population, key=lambda x: float(x.split(" ")[-1]), reverse=True)
+    return sorted(population, key=lambda x: float(x.split(" ")[-1]))
 
 
-def selectNewPopulation(oldPopulation, newPopulation, oldPopulationRatio=0.2, newPopulationRatio=0.8):
+def selectNewPopulation(oldPopulation, newPopulation, oldPopulationRatio=0.3, newPopulationRatio=0.7):
     oldPopulation = getAndAppendFitnessToPopulation(oldPopulation)
     oldPopulation = sortPopulation(oldPopulation)
 
@@ -205,18 +207,18 @@ def selectNewPopulation(oldPopulation, newPopulation, oldPopulationRatio=0.2, ne
 # Usage
 
 newPopulation = []
-population = initializePopulation(100)
+population = initializePopulation(100, numberOfTrucks=numberOfTrucks)
 bestIndividual = population[0]
 
-for i in range(70):
+for i in range(numberOfPasses):
     newPopulation = crossOver(population)
     newPopulation = mutate(newPopulation)
     newPopulation = selectNewPopulation(population, newPopulation)
 
-    if getIndevidualFitness(newPopulation[0]) > getIndevidualFitness(bestIndividual) or bestIndividual == "":
+    if getIndevidualFitness(newPopulation[0]) < getIndevidualFitness(bestIndividual) or bestIndividual == "":
         bestIndividual = newPopulation[0]
         print("********************************************************")
-        print(bestIndividual)
+        print(bestIndividual + "  <=====>  " + str(getIndevidualFitness(bestIndividual)))
         print("********************************************************")
 
     population = newPopulation

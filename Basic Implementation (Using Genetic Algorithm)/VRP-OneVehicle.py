@@ -100,7 +100,7 @@ def cross_over(population, CrossOverPoint, areas, genes):
 
         for index, x in enumerate(areas):
             if x not in regions:
-                for index2, gene in temp1:
+                for index2, gene in enumerate(temp1):
                     if gene.region == "-1":
                         temp1[index2] = genes[index]
 
